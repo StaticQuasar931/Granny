@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Charset & Viewport -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Title (use correct "game" spelling in title/description) -->
+  <title>Granny – Unblocked Horror Escape Game | StaticQuasar931</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://sites.google.com/view/staticquasar931/gm3z/granny"/>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Play Granny unblocked — a tense horror escape game. Sneak, hide, and solve puzzles to get out before Granny finds you. School-safe embed, no downloads."/>
+  <meta name="keywords" content="granny, granny unblocked, granny game, granny g@me, horror escape game, stealth puzzle game, scary escape, browser horror, school safe game, working at school, unblocked games at school, static, static931, static 931, staticq, staticq931, staticquasar, staticquasar931, 931, unbl0cked games"/>
+  <meta name="robots" content="index, follow"/>
+
+  <!-- Social Sharing -->
+  <meta property="og:title" content="Granny – Unblocked Horror Escape Game"/>
+  <meta property="og:description" content="Hide, sneak, and escape in this browser version of Granny — free, fullscreen, and unblocked."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://sites.google.com/view/staticquasar931/gm3z/granny"/>
+  <meta property="og:image" content="https://res.cloudinary.com/dcsrqennd/image/upload/v1747533056/raw_um4pvq.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <!-- Preload Popup Icons (Static standard) -->
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dcsrqennd/image/upload/v1747533056/raw_um4pvq.png">
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dcsrqennd/image/upload/v1747533158/raw_cw34yi.png">
+
+  <style>
+    :root{
+      --menu-bg: rgba(18,18,18,0.92);
+      --menu-text:#dff9ff;
+      --menu-accent:#49d6ff;
+      --shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    html, body{
+      margin:0; padding:0; height:100%; width:100%;
+      background:#000; overflow:hidden;
+    }
+
+    /* Fullscreen iframe */
+    iframe{
+      position: fixed; inset: 0;
+      width:100vw; height:100vh; border:0; display:block;
+      background:#000;
+    }
+
+    /* ---- Static Menu (top-left twinkle, close & 3-min return, corner mover) ---- */
+    #staticMenuWrap{
+      position: fixed; top:12px; left:12px; z-index:9999; user-select:none;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .staticMenu{
+      background: var(--menu-bg); color: var(--menu-text);
+      padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow);
+      font: 600 13px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      animation: twinkle 3.6s ease-in-out infinite;
+      transform-origin: left top; backdrop-filter: blur(4px);
+    }
+    .staticMenu a{ color: var(--menu-accent); text-decoration:none; border-bottom:1px dashed transparent; transition: border-color .25s ease; }
+    .staticMenu a:hover{ border-color: var(--menu-accent); }
+    .closeBtn{ margin-left:10px; cursor:pointer; color:#ff6b6b; font-weight:800; }
+    @keyframes twinkle{
+      0%{ box-shadow:0 0 10px rgba(73,214,255,.25), 0 0 0 rgba(255,110,199,0); }
+      50%{ box-shadow:0 0 18px rgba(73,214,255,.45), 0 0 28px rgba(255,110,199,.18); }
+      100%{ box-shadow:0 0 10px rgba(73,214,255,.25), 0 0 0 rgba(255,110,199,0); }
+    }
+
+    /* ---- Rotating bottom-right popup (Google Form / Instagram) ---- */
+    #popupIcon{
+      position: fixed; bottom: 30px; right: -120px;
+      width: 92px; height: 92px; z-index: 9998;
+      transition: right .9s ease-in-out;
+    }
+    #popupIcon.show{ right: 30px; }
+    #popupIcon img{
+      width:100%; height:100%; object-fit:contain;
+      border-radius:14px; animation: flickerPop 2.8s ease-in-out infinite;
+      box-shadow:0 8px 28px rgba(0,0,0,.45); background:#0b0b0b;
+    }
+    @keyframes flickerPop{
+      0%,100%{ transform: scale(1); opacity:.95; }
+      50%{ transform: scale(1.08); opacity:1; }
+    }
+
+    /* ---- Hidden SEO block ---- */
+    .seo-hidden{
+      position:absolute !important; width:1px !important; height:1px !important;
+      overflow:hidden !important; clip:rect(1px,1px,1px,1px) !important; white-space:nowrap !important;
+    }
+
+    @media (max-width:520px){
+      .staticMenu{ font-size:12px; padding:9px 12px; }
+      #popupIcon{ width:82px; height:82px; }
+    }
+  </style>
+
+  <script>
+    // Leave warning
+    window.onbeforeunload = () => "Leaving will reset your Granny session and progress.";
+
+    // ---- Static Menu behavior ----
+    const MENU_RETURN_MS = 180000; // 3 minutes
+    let cornerIndex = 0; // 0=TL, 1=TR, 2=BR, 3=BL
+
+    function placeMenuByCorner(idx){
+      const wrap = document.getElementById("staticMenuWrap");
+      const pos = [
+        {top:"12px", left:"12px", right:"", bottom:""},
+        {top:"12px", left:"", right:"12px", bottom:""},
+        {top:"", left:"", right:"12px", bottom:"12px"},
+        {top:"", left:"12px", right:"", bottom:"12px"}
+      ][idx % 4];
+      Object.assign(wrap.style, pos);
+    }
+    function closeStaticMenu(){
+      const wrap = document.getElementById("staticMenuWrap");
+      wrap.style.display = "none";
+      setTimeout(()=>{ wrap.style.display = "flex"; }, MENU_RETURN_MS);
+    }
+    function cycleCorner(){
+      cornerIndex = (cornerIndex + 1) % 4;
+      placeMenuByCorner(cornerIndex);
+    }
+    // Double right-click on the Static Menu to move corners
+    function bindCornerCycler(){
+      const wrap = document.getElementById("staticMenuWrap");
+      let lastRightClick = 0;
+      wrap.addEventListener("contextmenu", (e)=>{
+        e.preventDefault();
+        const now = Date.now();
+        if(now - lastRightClick < 400){ cycleCorner(); lastRightClick = 0; }
+        else{ lastRightClick = now; }
+        return false;
+      });
+    }
+
+    // ---- Rotating popup (Google Form / Instagram) with preloading ----
+    const popupImages = [
+      { src: "https://res.cloudinary.com/dcsrqennd/image/upload/v1747533056/raw_um4pvq.png", link: "https://sites.google.com/view/staticquasar931/google-form", alt: "Google Form" },
+      { src: "https://res.cloudinary.com/dcsrqennd/image/upload/v1747533158/raw_cw34yi.png", link: "https://www.instagram.com/freeschoolgamepage/", alt: "Instagram" }
+    ];
+    let popupIdx = 0, popupTimer = null, hideTimer = null;
+    function showPopupOnce(){
+      const a = document.getElementById("popupIcon");
+      const img = a.querySelector("img");
+      const item = popupImages[popupIdx];
+      a.href = item.link; img.alt = item.alt;
+
+      const loader = new Image();
+      loader.onload = ()=>{
+        img.src = item.src;
+        a.classList.add("show");
+        if(hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(()=> a.classList.remove("show"), 10000);
+      };
+      loader.onerror = ()=>{
+        a.classList.add("show");
+        if(hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(()=> a.classList.remove("show"), 10000);
+      };
+      loader.src = item.src;
+
+      popupIdx = (popupIdx + 1) % popupImages.length;
+    }
+    function startPopupRotation(){
+      if(popupTimer) clearInterval(popupTimer);
+      showPopupOnce();
+      popupTimer = setInterval(showPopupOnce, 25000);
+    }
+
+    // Init
+    window.addEventListener("load", ()=>{
+      placeMenuByCorner(cornerIndex);
+      bindCornerCycler();
+      startPopupRotation();
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Static Menu (no game-name label underneath) -->
+  <div id="staticMenuWrap">
+    <div class="staticMenu">
+      <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">More Unblocked Games by Static</a>
+      <span class="closeBtn" title="Hide (returns in 3 minutes)" onclick="closeStaticMenu()">✕</span>
+    </div>
+  </div>
+
+  <!-- Fullscreen Game Embed -->
+  <iframe
+    src="https://storage.googleapis.com/test-41376.appspot.com/gn.html"
+    title="Play Granny Online"
+    loading="lazy"
+    allowfullscreen
+    referrerpolicy="no-referrer"
+  ></iframe>
+
+  <!-- Rotating Popup (Google Form / Instagram) -->
+  <a id="popupIcon" href="https://sites.google.com/view/staticquasar931/google-form" target="_blank" rel="noopener noreferrer" aria-label="Static pop-up link">
+    <img src="https://res.cloudinary.com/dcsrqennd/image/upload/v1747533056/raw_um4pvq.png" alt="Google Form"/>
+  </a>
+
+  <!-- Hidden SEO Content (~200+ words, absolute internal links) -->
+  <div class="seo-hidden">
+    <h1>Granny – Play Unblocked</h1>
+    <p>
+      <strong>Granny</strong> is a tense first-person horror escape game where noise is your enemy. You wake up in a creaky house, solve
+      small environmental puzzles, and try to unlock a path to freedom — all while avoiding Granny’s sudden appearances. Every step and
+      dropped item can attract attention, so you’ll need to crouch, hide under beds, slip into closets, and explore carefully. This
+      browser embed is designed to be school-friendly and lightweight, so you can play without downloads, accounts, or extra setup.
+    </p>
+    <p>
+      The goal is simple: find keys, tools, and clues that help you remove barriers and open locked doors. You’ll learn the layout with
+      each run, planning quiet routes and timing movements between rooms. If you get caught, restart fast and try a new approach. The
+      fullscreen layout keeps the view immersive, while performance is tuned for common classroom laptops and Chromebooks.
+      Heads-up: some scenes include spooky audio and surprise moments — take breaks if you’re sensitive to jump scares.
+    </p>
+    <ul>
+      <li>Stealth-puzzle gameplay focused on sound and line-of-sight</li>
+      <li>Free to play in-browser; no account required</li>
+      <li>School-safe, unblocked fullscreen layout</li>
+      <li>Optimized for quick loading and broad compatibility</li>
+    </ul>
+    <p>More unblocked games by Static:</p>
+    <ul>
+      <li><a href="https://sites.google.com/view/staticquasar931/gm3z/subway-surfers" target="_blank" rel="noopener noreferrer">Subway Surfers</a></li>
+      <li><a href="https://sites.google.com/view/staticquasar931/gm3z/slither-io" target="_blank" rel="noopener noreferrer">Slither.io</a></li>
+      <li><a href="https://sites.google.com/view/staticquasar931/gm3z/doodle-jump" target="_blank" rel="noopener noreferrer">Doodle Jump</a></li>
+      <li><a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">All Games</a></li>
+    </ul>
+  </div>
+
+</body>
+</html>
